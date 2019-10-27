@@ -63,6 +63,7 @@ export default {
     extractCSS: true
   },
   generate: {
+    fallback: true,
     routes () { return api.routes() }
   }
 }

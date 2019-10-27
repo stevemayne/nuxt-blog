@@ -1,6 +1,7 @@
 export const state = () => ({
   currentPost: {},
-  posts: []
+  posts: [],
+  render_mode: ''
 })
 
 export const getters = {
@@ -25,7 +26,8 @@ export const mutations = {
     state.currentPost = currentPost
   },
   populatePosts (state, posts) {
-    state.posts = posts
+    state.render_mode = posts.render_mode
+    state.posts = posts.posts
   },
   populatePost (state, post) {
     for (let i = 0; i < state.posts.length; i++) {

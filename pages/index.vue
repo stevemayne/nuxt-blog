@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Steve Test NUXT blog</h1>
+    <h1>Steve Test NUXT blog {{ renderMode }}</h1>
     <blog-article v-for="post in posts" :key="post.id" :post="post" />
   </div>
 </template>
@@ -17,13 +17,16 @@ export default {
   computed: {
     ...mapGetters({
       posts: 'blog/postsToGenerate'
-    })
+    }),
+    renderMode () {
+      return this.$store.state.blog.render_mode
+    }
   },
-  async fetch ({ params, store, error }) {
+  async fetch ({ store, process }) {
     const api = new PostsAPI()
     await api.getPosts().then(
-      (result) => {
-        store.commit('blog/populatePosts', result)
+      (posts) => {
+        store.commit('blog/populatePosts', { posts, render_mode: process })
       }
     )
   }
