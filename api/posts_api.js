@@ -40,12 +40,4 @@ export class PostsAPI {
       })
     return dynamicRoutes
   }
-
-  getRoutes () {
-    let result = []
-    this.routes().then((res) => {
-      result = res
-    })
-    return result
-  }
 }

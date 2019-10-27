@@ -63,6 +63,6 @@ export default {
     extractCSS: true
   },
   generate: {
-    routes: api.getRoutes()
+    routes () { return api.routes() }
   }
 }

@@ -1,9 +1,10 @@
 <template>
   <div>
-    <h2>Article: {{ post.title }}</h2>
+    <ul>
     <nuxt-link :to="{name: 'articles-slug', params: {'slug': post.id}}">
-      {{ post.id }}
+      <li>{{ post.title }}</li>
     </nuxt-link>
+    </ul>
   </div>
 </template>
 
