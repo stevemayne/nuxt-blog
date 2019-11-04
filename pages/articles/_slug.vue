@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>{{ post.title }}</h1>
-    <p>{{ post.body }}</p>
+    <p v-html="post.html"></p>
   </div>
 </template>
 
@@ -16,17 +16,17 @@ export default {
   },
   computed: {
     post () {
-      return this.$store.getters['blog/getPost'](this.slug)
+      return this.$store.getters['blog/getPostBySlug'](this.slug)
     }
   },
   async fetch ({ params, store, error, payload }) {
     if (payload) {
       store.commit('blog/populatePost', payload)
     } else if (params.slug) {
-      const post = store.getters['blog/getPost'](params.slug)
+      const post = store.getters['blog/getPostBySlug'](params.slug)
       if (post === undefined) {
         const api = new PostsAPI()
-        await api.getPost(params.slug).then(
+        await api.getPostBySlug(params.slug).then(
           (result) => {
             store.commit('blog/populatePost', result)
           }

@@ -11,9 +11,9 @@ export const getters = {
   getCurrentPost (state) {
     return state.currentPost
   },
-  getPost (state) {
-    return (id) => {
-      const matching = state.posts.filter(post => (post.id.toString() === id.toString()))
+  getPostBySlug (state) {
+    return (slug) => {
+      const matching = state.posts.filter(post => (post.slug.toString() === slug.toString()))
       if (matching.length > 0) {
         return matching[0]
       }
@@ -31,7 +31,7 @@ export const mutations = {
   },
   populatePost (state, post) {
     for (let i = 0; i < state.posts.length; i++) {
-      if (state.posts[i].id === post.id) {
+      if (state.posts[i].slug === post.slug) {
         state.posts.splice(i, 1)
         break
       }

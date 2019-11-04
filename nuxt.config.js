@@ -1,5 +1,5 @@
 import { PostsAPI } from './api/posts_api'
-const api = new PostsAPI()
+require('dotenv').config()
 
 export default {
   mode: 'universal',
@@ -36,14 +36,16 @@ export default {
   */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/dotenv'
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/dotenv'
   ],
   /*
   ** Axios module configuration
@@ -64,6 +66,9 @@ export default {
   },
   generate: {
     fallback: true,
-    routes () { return api.routes() }
+    routes () {
+      const api = new PostsAPI()
+      return api.routes()
+    }
   }
 }

@@ -4,14 +4,26 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "npm run dev",
+      "name": "Launch via NPM",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run-script",
+        "generate-debug"
+      ],
+      "port": 9229
+    },
+
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "npm run generate",
       "runtimeExecutable": "npm",
       "windows": {
         "runtimeExecutable": "npm.cmd"
       },
       "runtimeArgs": [
         "run",
-        "dev-debug"
+        "generate-debug"
       ],
       "port": 5858
     },

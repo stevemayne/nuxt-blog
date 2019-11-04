@@ -1,31 +1,27 @@
-import axios from 'axios'
+import GhostContentAPI from '@tryghost/content-api'
 
 export class PostsAPI {
   constructor () {
-    this.base_url = 'https://jsonplaceholder.typicode.com/'
+    this.api = new GhostContentAPI({
+      url: process.env.GHOST_URI,
+      key: process.env.GHOST_KEY,
+      version: 'v3'
+    })
   }
 
-  async getPost (id) {
-    const url = this.base_url + 'posts/' + id.toString()
-    const post = await axios.get(url)
-      .then((res) => {
-        return res.data
-      }, (error) => {
-        throw new Error(error.message)
-      })
-    return post
+  async getPostBySlug (slug) {
+    const result = await this.api.posts.read({ slug: 'something' }, { formats: ['html'] })
+    return result
   }
 
   async getPosts () {
-    const url = this.base_url + 'posts'
-    const data = await axios.get(url)
-      .then((res) => {
-        return res.data
-      },
-      (error) => {
-        throw new Error(error.message)
+    const result = await this.api.posts.browse({ limit: 10, include: 'tags,authors' })
+      .then((posts) => {
+        return posts
       })
-    return data
+      .catch((message) => {
+      })
+    return result
   }
 
   async routes () {
@@ -33,7 +29,7 @@ export class PostsAPI {
       .then((res) => {
         return res.map((post) => {
           return {
-            route: '/articles/' + post.id,
+            route: '/articles/' + post.slug,
             payload: post
           }
         })
