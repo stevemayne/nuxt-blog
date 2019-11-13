@@ -10,7 +10,7 @@ export class PostsAPI {
   }
 
   async getPostBySlug (slug) {
-    const result = await this.api.posts.read({ slug: 'something' }, { formats: ['html'] })
+    const result = await this.api.posts.read({ slug }, { formats: ['html'] })
     return result
   }
 

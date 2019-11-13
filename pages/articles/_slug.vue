@@ -1,7 +1,10 @@
 <template>
-  <div>
-    <h1>{{ post.title }}</h1>
-    <p v-html="post.html"></p>
+  <div class="container post">
+    <div class="col-12">
+      <img :src="post.feature_image">
+      <h1>{{ post.title }}</h1>
+      <p v-html="post.html" />
+    </div>
   </div>
 </template>
 
@@ -14,25 +17,27 @@ export default {
       slug: this.$route.params.slug
     }
   },
-  computed: {
-    post () {
-      return this.$store.getters['blog/getPostBySlug'](this.slug)
-    }
-  },
-  async fetch ({ params, store, error, payload }) {
+  async asyncData ({ params, payload }) {
     if (payload) {
-      store.commit('blog/populatePost', payload)
+      return { post: payload }
     } else if (params.slug) {
-      const post = store.getters['blog/getPostBySlug'](params.slug)
-      if (post === undefined) {
-        const api = new PostsAPI()
-        await api.getPostBySlug(params.slug).then(
-          (result) => {
-            store.commit('blog/populatePost', result)
+      const api = new PostsAPI()
+      const result = await api.getPostBySlug(params.slug).then(
+        (result) => {
+          return {
+            post: result
           }
-        )
-      }
+        }
+      )
+      return result
     }
   }
 }
 </script>
+
+<style scoped>
+.post img {
+  width: 100%;
+  height: auto;
+}
+</style>
