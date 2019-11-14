@@ -2,6 +2,14 @@
 
 > Ghost CMS Demo
 
+## Reference your Ghost instance
+
+```bash
+$ cp .env-example .env
+
+# Then edit .env to reference the URL and key of Ghost
+```
+
 ## Build Setup
 
 ``` bash
