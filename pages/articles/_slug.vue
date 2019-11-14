@@ -1,8 +1,14 @@
 <template>
   <div class="container post">
+    <h1>
+      <nuxt-link :to="{name: 'index'}">
+        Steve Test Static Blog
+      </nuxt-link>
+    </h1>
     <div class="col-12">
       <img :src="post.feature_image">
       <h1>{{ post.title }}</h1>
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <p v-html="post.html" />
     </div>
   </div>
@@ -22,14 +28,14 @@ export default {
       return { post: payload }
     } else if (params.slug) {
       const api = new PostsAPI()
-      const result = await api.getPostBySlug(params.slug).then(
+      const data = await api.getPostBySlug(params.slug).then(
         (result) => {
           return {
             post: result
           }
         }
       )
-      return result
+      return data
     }
   }
 }

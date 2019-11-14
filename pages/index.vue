@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Steve Test NUXT blog {{ renderMode }}</h1>
+    <h1>Steve Test Static Blog {{ renderMode }}</h1>
     <div class="card-columns">
       <blog-article v-for="post in posts" :key="post.id" :post="post" />
     </div>
@@ -8,12 +8,12 @@
 </template>
 
 <script>
-import Article from '../components/Article.vue'
+import ArticleSummary from '../components/ArticleSummary.vue'
 import { PostsAPI } from '../api/posts_api'
 
 export default {
   components: {
-    'blog-article': Article
+    'blog-article': ArticleSummary
   },
   computed: {
     renderMode () {
@@ -29,7 +29,8 @@ export default {
           'id': post.id,
           'slug': post.slug,
           'excerpt': post.excerpt,
-          'feature_image': post.feature_image
+          'feature_image': post.feature_image,
+          'tags': post.tags
         }))
         return { posts: postindex }
       }
